@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 export type TaskDocument = HydratedDocument<Task>;
 
@@ -15,7 +15,13 @@ export class Task {
   completed?: boolean;
 
   @Prop()
-  completionDate: Date;
+  completionDate?: Date;
+
+  @Prop()
+  deadlineDate: Date;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Baby' })
+  babyId: mongoose.Schema.Types.ObjectId;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

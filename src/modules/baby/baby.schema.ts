@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Task } from '../task/task.schema';
+import { User } from '../user/user.schema';
 
 export type BabyDocument = HydratedDocument<Baby>;
 
@@ -15,8 +15,8 @@ export class Baby {
   @Prop({ required: true })
   months: number;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }] })
-  tasks: Task[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  parents: mongoose.Schema.Types.ObjectId[];
 }
 
 export const BabySchema = SchemaFactory.createForClass(Baby);
