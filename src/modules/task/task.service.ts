@@ -16,11 +16,17 @@ export class TaskService {
     return await this.taskRepository.findAllByBabyId(babyId);
   }
 
+  async getAllByUserId(userId: string): Promise<TaskDocument[]> {
+    return await this.taskRepository.findAllByUserId(userId);
+  }
+
   async create(parentId: string, createTaskRequest: UpsertTaskRequest): Promise<TaskDocument> {
     await this.babyService.getBabyById(parentId, createTaskRequest.babyId);
     return await this.taskRepository.create({
       ...createTaskRequest,
+      deadlineDate: createTaskRequest.deadlineDate || new Date(),
       completed: false,
+      parents: [parentId],
     });
   }
 

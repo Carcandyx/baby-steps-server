@@ -22,6 +22,9 @@ export class Task {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Baby' })
   babyId: mongoose.Schema.Types.ObjectId;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  parents: mongoose.Schema.Types.ObjectId[];
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

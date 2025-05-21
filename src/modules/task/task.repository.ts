@@ -16,6 +16,10 @@ export class TaskRepository {
     return await this.taskModel.find({ babyId });
   }
 
+  async findAllByUserId(userId: string): Promise<TaskDocument[]> {
+    return await this.taskModel.find({ parents: userId });
+  }
+
   async create(createTaskDto: UpsertTaskDto): Promise<TaskDocument> {
     return await this.taskModel.create(createTaskDto);
   }

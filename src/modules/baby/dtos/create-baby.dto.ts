@@ -1,15 +1,28 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsObject, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ActivitiesDto } from './upsert-baby-request.dto';
 
 export class CreateBabyDto {
   @IsString()
-  readonly firstName: string;
+  readonly name: string;
 
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  readonly birthDate?: Date;
+
+  @IsOptional()
   @IsString()
-  readonly lastName: string;
+  readonly weight?: string;
 
-  @IsNumber()
-  readonly months: number;
-
+  @IsOptional()
   @IsString()
+  readonly height?: string;
+
+  @IsOptional()
+  @IsObject()
+  readonly activities?: ActivitiesDto;
+
+  @IsString({ each: true })
   readonly parents: string[];
 }

@@ -1,19 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from '../user/user.schema';
+import { EGender } from './baby.enum';
 
 export type BabyDocument = HydratedDocument<Baby>;
+
+// Simple interface for activities instead of a schema
+export interface Activities {
+  feeding?: Date;
+  sleep?: Date;
+  diaper?: Date;
+}
 
 @Schema()
 export class Baby {
   @Prop({ required: true })
-  firstName: string;
+  name: string;
 
-  @Prop({ required: true })
-  lastName: string;
+  @Prop({ type: Date })
+  birthDate: Date;
 
-  @Prop({ required: true })
-  months: number;
+  @Prop()
+  weight: string;
+
+  @Prop()
+  height: string;
+
+  @Prop()
+  gender: EGender;
+
+  @Prop({ type: Object })
+  activities: Activities;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   parents: mongoose.Schema.Types.ObjectId[];

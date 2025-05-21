@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsDate, IsString } from 'class-validator';
 
 export class UpsertTaskDto {
   @IsString()
@@ -15,4 +15,8 @@ export class UpsertTaskDto {
 
   @IsBoolean()
   readonly completed: boolean;
+
+  @IsArray()
+  @IsString({ each: true })
+  readonly parents: string[];
 }

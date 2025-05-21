@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Body, Controller, Delete, Get, Patch, Post, Param, Req, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -24,6 +26,12 @@ export class TaskController {
   async getAllByBabyId(@Req() request, @Param('babyId') babyId: string) {
     const { user } = request;
     return await this.taskService.getAllByBabyId(user.sub as string, babyId);
+  }
+
+  @Get('/')
+  async getAllByUserId(@Req() request) {
+    const { user } = request;
+    return await this.taskService.getAllByUserId(user.sub as string);
   }
 
   @Patch('/:taskId')

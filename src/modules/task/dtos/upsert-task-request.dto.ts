@@ -1,4 +1,5 @@
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsDate, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpsertTaskRequest {
   @IsString()
@@ -7,8 +8,10 @@ export class UpsertTaskRequest {
   @IsString()
   readonly description: string;
 
+  @IsOptional()
   @IsDate()
-  readonly deadlineDate: Date;
+  @Type(() => Date)
+  readonly deadlineDate?: Date;
 
   @IsString()
   readonly babyId: string;
@@ -16,4 +19,9 @@ export class UpsertTaskRequest {
   @IsOptional()
   @IsBoolean()
   completed?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  readonly parents?: string[];
 }

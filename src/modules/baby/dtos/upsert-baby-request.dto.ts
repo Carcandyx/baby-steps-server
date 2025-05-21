@@ -1,12 +1,43 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsObject, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+
+// DTO for validating activities data
+export class ActivitiesDto {
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  readonly feeding?: Date;
+
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  readonly sleep?: Date;
+
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  readonly diaper?: Date;
+}
 
 export class UpsertBabyRequest {
   @IsString()
-  readonly firstName: string;
+  readonly name: string;
 
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  readonly birthDate?: Date;
+
+  @IsOptional()
   @IsString()
-  readonly lastName: string;
+  readonly weight?: string;
 
-  @IsNumber()
-  readonly months: number;
+  @IsOptional()
+  @IsString()
+  readonly height?: string;
+
+  @IsOptional()
+  @IsObject()
+  @Type(() => ActivitiesDto)
+  readonly activities?: ActivitiesDto;
 }

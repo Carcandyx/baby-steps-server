@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { BabyService } from './baby.service';
@@ -12,6 +14,12 @@ export class BabyController {
   async getAllByParentId(@Req() request) {
     const { user } = request;
     return await this.babyService.getAllByParentId(user.sub as string);
+  }
+
+  @Get('/:babyId')
+  async getById(@Req() request, @Param('babyId') babyId: string) {
+    const { user } = request;
+    return await this.babyService.getBabyById(user.sub as string, babyId);
   }
 
   @Post('/')
@@ -34,5 +42,29 @@ export class BabyController {
   ) {
     const { user } = request;
     return await this.babyService.patch(user.sub as string, babyId, patchBabyRequest);
+  }
+
+  @Patch('/:babyId/feeding')
+  async updateFeeding(@Req() request, @Param('babyId') babyId: string) {
+    const { user } = request;
+    return await this.babyService.patch(user.sub as string, babyId, {
+      activities: { feeding: new Date() },
+    });
+  }
+
+  @Patch('/:babyId/sleep')
+  async updateSleep(@Req() request, @Param('babyId') babyId: string) {
+    const { user } = request;
+    return await this.babyService.patch(user.sub as string, babyId, {
+      activities: { sleep: new Date() },
+    });
+  }
+
+  @Patch('/:babyId/diaper')
+  async updateDiaper(@Req() request, @Param('babyId') babyId: string) {
+    const { user } = request;
+    return await this.babyService.patch(user.sub as string, babyId, {
+      activities: { diaper: new Date() },
+    });
   }
 }
